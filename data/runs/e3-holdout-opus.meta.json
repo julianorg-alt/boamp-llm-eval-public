@@ -1,0 +1,18 @@
+{
+ "batch_id": "msgbatch_01PhBbK7y1SHg8MsXvPmm8Wj",
+ "model": "claude-opus-5-5",
+ "split": "holdout",
+ "effort": "low",
+ "n": 20,
+ "created_at": "2026-11-18T17:48:52.830666+00:00",
+ "ended_at": "2026-11-18T17:55:04.165931+00:00",
+ "request_counts": {
+  "processing": 0,
+  "succeeded": 20,
+  "errored": 0,
+  "canceled": 0,
+  "expired": 0
+ },
+ "latency_s": 371.335265,
+ "cost_usd": 0.0765752
+}
