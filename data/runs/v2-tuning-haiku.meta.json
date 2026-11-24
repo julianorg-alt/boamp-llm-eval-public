@@ -5,5 +5,15 @@
  "effort": "low",
  "max_tokens": 8192,
  "n": 30,
- "created_at": "2026-11-24T20:51:45.312409+00:00"
+ "created_at": "2026-11-24T20:51:45.312409+00:00",
+ "ended_at": "2026-11-24T20:53:34.407854+00:00",
+ "request_counts": {
+  "processing": 0,
+  "succeeded": 30,
+  "errored": 0,
+  "canceled": 0,
+  "expired": 0
+ },
+ "latency_s": 109.095445,
+ "cost_usd": 0.003730585
 }

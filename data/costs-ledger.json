@@ -6018,6 +6018,396 @@
         "cache_read_tokens": 1658
       },
       "cost_usd": 0.0021169
+    },
+    {
+      "model": "claude-haiku-5-5",
+      "label": "v2-tuning-haiku:26-110903",
+      "batch": true,
+      "usage": {
+        "input_tokens": 417,
+        "output_tokens": 323,
+        "cache_write_5m_tokens": 0,
+        "cache_write_1h_tokens": 0,
+        "cache_read_tokens": 1658
+      },
+      "cost_usd": 0.00010989
+    },
+    {
+      "model": "claude-haiku-5-5",
+      "label": "v2-tuning-haiku:26-111066",
+      "batch": true,
+      "usage": {
+        "input_tokens": 976,
+        "output_tokens": 163,
+        "cache_write_5m_tokens": 0,
+        "cache_write_1h_tokens": 0,
+        "cache_read_tokens": 1658
+      },
+      "cost_usd": 9.784e-05
+    },
+    {
+      "model": "claude-haiku-5-5",
+      "label": "v2-tuning-haiku:26-111108",
+      "batch": true,
+      "usage": {
+        "input_tokens": 921,
+        "output_tokens": 305,
+        "cache_write_5m_tokens": 0,
+        "cache_write_1h_tokens": 0,
+        "cache_read_tokens": 1658
+      },
+      "cost_usd": 0.00013059
+    },
+    {
+      "model": "claude-haiku-5-5",
+      "label": "v2-tuning-haiku:26-111136",
+      "batch": true,
+      "usage": {
+        "input_tokens": 1768,
+        "output_tokens": 834,
+        "cache_write_5m_tokens": 0,
+        "cache_write_1h_tokens": 0,
+        "cache_read_tokens": 1658
+      },
+      "cost_usd": 0.00030519
+    },
+    {
+      "model": "claude-haiku-5-5",
+      "label": "v2-tuning-haiku:26-111211",
+      "batch": true,
+      "usage": {
+        "input_tokens": 2758,
+        "output_tokens": 381,
+        "cache_write_5m_tokens": 0,
+        "cache_write_1h_tokens": 0,
+        "cache_read_tokens": 1658
+      },
+      "cost_usd": 0.00024144
+    },
+    {
+      "model": "claude-haiku-5-5",
+      "label": "v2-tuning-haiku:26-111282",
+      "batch": true,
+      "usage": {
+        "input_tokens": 986,
+        "output_tokens": 204,
+        "cache_write_5m_tokens": 0,
+        "cache_write_1h_tokens": 0,
+        "cache_read_tokens": 1658
+      },
+      "cost_usd": 0.00010859
+    },
+    {
+      "model": "claude-haiku-5-5",
+      "label": "v2-tuning-haiku:26-111575",
+      "batch": true,
+      "usage": {
+        "input_tokens": 277,
+        "output_tokens": 174,
+        "cache_write_5m_tokens": 0,
+        "cache_write_1h_tokens": 0,
+        "cache_read_tokens": 1658
+      },
+      "cost_usd": 6.564e-05
+    },
+    {
+      "model": "claude-haiku-5-5",
+      "label": "v2-tuning-haiku:26-111669",
+      "batch": true,
+      "usage": {
+        "input_tokens": 628,
+        "output_tokens": 352,
+        "cache_write_5m_tokens": 0,
+        "cache_write_1h_tokens": 0,
+        "cache_read_tokens": 1658
+      },
+      "cost_usd": 0.00012769
+    },
+    {
+      "model": "claude-haiku-5-5",
+      "label": "v2-tuning-haiku:26-111674",
+      "batch": true,
+      "usage": {
+        "input_tokens": 896,
+        "output_tokens": 273,
+        "cache_write_5m_tokens": 0,
+        "cache_write_1h_tokens": 0,
+        "cache_read_tokens": 1658
+      },
+      "cost_usd": 0.00012134
+    },
+    {
+      "model": "claude-haiku-5-5",
+      "label": "v2-tuning-haiku:26-111834",
+      "batch": true,
+      "usage": {
+        "input_tokens": 278,
+        "output_tokens": 174,
+        "cache_write_5m_tokens": 0,
+        "cache_write_1h_tokens": 0,
+        "cache_read_tokens": 1658
+      },
+      "cost_usd": 6.569e-05
+    },
+    {
+      "model": "claude-haiku-5-5",
+      "label": "v2-tuning-haiku:26-112020",
+      "batch": true,
+      "usage": {
+        "input_tokens": 375,
+        "output_tokens": 216,
+        "cache_write_5m_tokens": 0,
+        "cache_write_1h_tokens": 0,
+        "cache_read_tokens": 1658
+      },
+      "cost_usd": 8.104e-05
+    },
+    {
+      "model": "claude-haiku-5-5",
+      "label": "v2-tuning-haiku:26-112056",
+      "batch": true,
+      "usage": {
+        "input_tokens": 507,
+        "output_tokens": 236,
+        "cache_write_5m_tokens": 0,
+        "cache_write_1h_tokens": 0,
+        "cache_read_tokens": 1658
+      },
+      "cost_usd": 9.264e-05
+    },
+    {
+      "model": "claude-haiku-5-5",
+      "label": "v2-tuning-haiku:26-112163",
+      "batch": true,
+      "usage": {
+        "input_tokens": 368,
+        "output_tokens": 238,
+        "cache_write_5m_tokens": 0,
+        "cache_write_1h_tokens": 0,
+        "cache_read_tokens": 1658
+      },
+      "cost_usd": 8.619e-05
+    },
+    {
+      "model": "claude-haiku-5-5",
+      "label": "v2-tuning-haiku:26-112322",
+      "batch": true,
+      "usage": {
+        "input_tokens": 373,
+        "output_tokens": 131,
+        "cache_write_5m_tokens": 0,
+        "cache_write_1h_tokens": 0,
+        "cache_read_tokens": 1658
+      },
+      "cost_usd": 5.9690000000000006e-05
+    },
+    {
+      "model": "claude-haiku-5-5",
+      "label": "v2-tuning-haiku:26-112334",
+      "batch": true,
+      "usage": {
+        "input_tokens": 241,
+        "output_tokens": 183,
+        "cache_write_5m_tokens": 1658,
+        "cache_write_1h_tokens": 0,
+        "cache_read_tokens": 0
+      },
+      "cost_usd": 0.000161425
+    },
+    {
+      "model": "claude-haiku-5-5",
+      "label": "v2-tuning-haiku:26-112604",
+      "batch": true,
+      "usage": {
+        "input_tokens": 538,
+        "output_tokens": 300,
+        "cache_write_5m_tokens": 0,
+        "cache_write_1h_tokens": 0,
+        "cache_read_tokens": 1658
+      },
+      "cost_usd": 0.00011019
+    },
+    {
+      "model": "claude-haiku-5-5",
+      "label": "v2-tuning-haiku:26-112840",
+      "batch": true,
+      "usage": {
+        "input_tokens": 885,
+        "output_tokens": 496,
+        "cache_write_5m_tokens": 0,
+        "cache_write_1h_tokens": 0,
+        "cache_read_tokens": 1658
+      },
+      "cost_usd": 0.00017654
+    },
+    {
+      "model": "claude-haiku-5-5",
+      "label": "v2-tuning-haiku:26-112869",
+      "batch": true,
+      "usage": {
+        "input_tokens": 331,
+        "output_tokens": 235,
+        "cache_write_5m_tokens": 0,
+        "cache_write_1h_tokens": 0,
+        "cache_read_tokens": 1658
+      },
+      "cost_usd": 8.359e-05
+    },
+    {
+      "model": "claude-haiku-5-5",
+      "label": "v2-tuning-haiku:26-112935",
+      "batch": true,
+      "usage": {
+        "input_tokens": 179,
+        "output_tokens": 183,
+        "cache_write_5m_tokens": 0,
+        "cache_write_1h_tokens": 0,
+        "cache_read_tokens": 1658
+      },
+      "cost_usd": 6.299e-05
+    },
+    {
+      "model": "claude-haiku-5-5",
+      "label": "v2-tuning-haiku:26-113012",
+      "batch": true,
+      "usage": {
+        "input_tokens": 475,
+        "output_tokens": 212,
+        "cache_write_5m_tokens": 0,
+        "cache_write_1h_tokens": 0,
+        "cache_read_tokens": 1658
+      },
+      "cost_usd": 8.503999999999999e-05
+    },
+    {
+      "model": "claude-haiku-5-5",
+      "label": "v2-tuning-haiku:26-113077",
+      "batch": true,
+      "usage": {
+        "input_tokens": 1596,
+        "output_tokens": 533,
+        "cache_write_5m_tokens": 0,
+        "cache_write_1h_tokens": 0,
+        "cache_read_tokens": 1658
+      },
+      "cost_usd": 0.00022134000000000002
+    },
+    {
+      "model": "claude-haiku-5-5",
+      "label": "v2-tuning-haiku:26-113151",
+      "batch": true,
+      "usage": {
+        "input_tokens": 277,
+        "output_tokens": 223,
+        "cache_write_5m_tokens": 0,
+        "cache_write_1h_tokens": 0,
+        "cache_read_tokens": 1658
+      },
+      "cost_usd": 7.789e-05
+    },
+    {
+      "model": "claude-haiku-5-5",
+      "label": "v2-tuning-haiku:26-113176",
+      "batch": true,
+      "usage": {
+        "input_tokens": 408,
+        "output_tokens": 820,
+        "cache_write_5m_tokens": 0,
+        "cache_write_1h_tokens": 0,
+        "cache_read_tokens": 1658
+      },
+      "cost_usd": 0.00023369
+    },
+    {
+      "model": "claude-haiku-5-5",
+      "label": "v2-tuning-haiku:26-113263",
+      "batch": true,
+      "usage": {
+        "input_tokens": 391,
+        "output_tokens": 241,
+        "cache_write_5m_tokens": 0,
+        "cache_write_1h_tokens": 0,
+        "cache_read_tokens": 1658
+      },
+      "cost_usd": 8.809e-05
+    },
+    {
+      "model": "claude-haiku-5-5",
+      "label": "v2-tuning-haiku:26-113361",
+      "batch": true,
+      "usage": {
+        "input_tokens": 988,
+        "output_tokens": 331,
+        "cache_write_5m_tokens": 0,
+        "cache_write_1h_tokens": 0,
+        "cache_read_tokens": 1658
+      },
+      "cost_usd": 0.00014044
+    },
+    {
+      "model": "claude-haiku-5-5",
+      "label": "v2-tuning-haiku:26-113622",
+      "batch": true,
+      "usage": {
+        "input_tokens": 497,
+        "output_tokens": 678,
+        "cache_write_5m_tokens": 0,
+        "cache_write_1h_tokens": 0,
+        "cache_read_tokens": 1658
+      },
+      "cost_usd": 0.00020264
+    },
+    {
+      "model": "claude-haiku-5-5",
+      "label": "v2-tuning-haiku:26-113736",
+      "batch": true,
+      "usage": {
+        "input_tokens": 172,
+        "output_tokens": 124,
+        "cache_write_5m_tokens": 0,
+        "cache_write_1h_tokens": 0,
+        "cache_read_tokens": 1658
+      },
+      "cost_usd": 4.789e-05
+    },
+    {
+      "model": "claude-haiku-5-5",
+      "label": "v2-tuning-haiku:26-113737",
+      "batch": true,
+      "usage": {
+        "input_tokens": 1252,
+        "output_tokens": 407,
+        "cache_write_5m_tokens": 0,
+        "cache_write_1h_tokens": 0,
+        "cache_read_tokens": 1658
+      },
+      "cost_usd": 0.00017263999999999997
+    },
+    {
+      "model": "claude-haiku-5-5",
+      "label": "v2-tuning-haiku:26-113785",
+      "batch": true,
+      "usage": {
+        "input_tokens": 223,
+        "output_tokens": 126,
+        "cache_write_5m_tokens": 0,
+        "cache_write_1h_tokens": 0,
+        "cache_read_tokens": 1658
+      },
+      "cost_usd": 5.094e-05
+    },
+    {
+      "model": "claude-haiku-5-5",
+      "label": "v2-tuning-haiku:26-114136",
+      "batch": true,
+      "usage": {
+        "input_tokens": 545,
+        "output_tokens": 345,
+        "cache_write_5m_tokens": 0,
+        "cache_write_1h_tokens": 0,
+        "cache_read_tokens": 1658
+      },
+      "cost_usd": 0.00012179
     }
   ]
 }
