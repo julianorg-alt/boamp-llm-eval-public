@@ -62,6 +62,43 @@ def bootstrap_ci(rows, stat, *, n_boot: int = N_BOOT, seed: int = SEED, alpha: f
     return lo, hi
 
 
+def paired_diff_ci(rows_a: list[dict], rows_b: list[dict], stat=None, *,
+                   n_boot: int = N_BOOT, seed: int = SEED, alpha: float = ALPHA):  # fmt: skip
+    """Bootstrap apparié de stat(A) - stat(B) : même tirage d'avis pour A et B.
+
+    `rows_a` et `rows_b` sont alignés par `idweb` (même ensemble d'avis, ordre trié ici).
+    Retourne (écart observé, bas, haut), IC percentile à 1 - alpha ; None si rien à estimer.
+    """
+    stat = stat or hard_global
+    a = {r["idweb"]: r for r in rows_a}
+    b = {r["idweb"]: r for r in rows_b}
+    if a.keys() != b.keys():
+        raise ValueError("comparaison appariée : les deux modèles n'ont pas les mêmes avis")
+    ids = sorted(a)
+    if not ids:
+        return None
+    sa, sb = stat([a[i] for i in ids]), stat([b[i] for i in ids])
+    if sa is None or sb is None:
+        return None
+    rng = random.Random(seed)  # noqa: S311
+    diffs = []
+    for _ in range(n_boot):
+        draw = [ids[rng.randrange(len(ids))] for _ in ids]
+        va, vb = stat([a[i] for i in draw]), stat([b[i] for i in draw])
+        if va is not None and vb is not None:
+            diffs.append(va - vb)
+    if not diffs:
+        return None
+    diffs.sort()
+    lo = diffs[int(len(diffs) * alpha / 2)]
+    hi = diffs[min(len(diffs) - 1, int(len(diffs) * (1 - alpha / 2)))]
+    return sa - sb, lo, hi
+
+
+def excludes_zero(ci: tuple[float, float, float] | None) -> bool:
+    return ci is not None and (ci[1] > 0 or ci[2] < 0)
+
+
 def _stat(rows, field, *, ci=True):
     n = sum(r["res"][field].applicable for r in rows)
     mean = field_mean(rows, field)
