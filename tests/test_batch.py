@@ -164,3 +164,11 @@ def test_holdout_exige_le_gel(tmp_path, monkeypatch):
     with pytest.raises(SystemExit):
         batch.require_freeze("holdout")
     batch.require_freeze("dev")
+
+
+def test_require_freeze_v2_test_refuse_sans_gel(tmp_path, monkeypatch):
+    monkeypatch.chdir(tmp_path)  # pas un dépôt git : gel absent
+    with pytest.raises(SystemExit):
+        batch.require_freeze("v2-test")
+    batch.require_freeze("v2-tuning")  # la mise au point reste ouverte
+    batch.require_freeze("dev")

@@ -49,5 +49,7 @@ def test_joue_criteria_have_no_type_suffix():
 
 
 def test_mapa_sous_noeuds_en_chaine_ne_plantent_pas():
-    donnees = {"MAPA": {"organisme": "x", "initial": {"conditions": "texte", "caracteristiques": "t"}}}
+    donnees = {
+        "MAPA": {"organisme": "x", "initial": {"conditions": "texte", "caracteristiques": "t"}}
+    }
     assert isinstance(render_text("MAPA", donnees, Masker([])), str)

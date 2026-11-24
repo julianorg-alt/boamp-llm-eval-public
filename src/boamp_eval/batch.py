@@ -28,6 +28,8 @@ from boamp_eval.schema import (
 SCHEMA_MARGIN_TOKENS = 2000  # le schéma de sortie et le prompt système injecté par l'API (majorant)
 LEDGER = Path("data/costs-ledger.json")
 FREEZE = Path("docs/FREEZE.md")
+FREEZE_V2 = Path("docs/FREEZE-v2.md")
+FREEZE_FOR = {"holdout": FREEZE, "v2-test": FREEZE_V2}  # jeux lus seulement après un gel commité
 MODELS = ("claude-haiku-5-5", "claude-sonnet-5-5", "claude-opus-5-5")
 
 
@@ -112,15 +114,18 @@ def collect(client, batch_id: str, model: str, records: list[dict], ledger: Cost
 
 
 def require_freeze(split: str) -> None:
-    """Le hold-out n'est lu qu'après le commit du gel (docs/FREEZE.md versionné)."""
-    if split != "holdout":
+    """Un jeu protégé (hold-out v1, test v2) n'est lu qu'après le commit de son gel versionné."""
+    freeze = FREEZE_FOR.get(split)
+    if freeze is None:
         return
-    ok = FREEZE.exists() and subprocess.run(  # noqa: S603
-        ["git", "ls-files", "--error-unmatch", str(FREEZE)],  # noqa: S607
+    ok = freeze.exists() and subprocess.run(  # noqa: S603
+        ["git", "ls-files", "--error-unmatch", str(freeze)],  # noqa: S607
         capture_output=True, check=False,
     ).returncode == 0  # fmt: skip
     if not ok:
-        sys.exit("hold-out refusé : docs/FREEZE.md absent ou non versionné (geler d'abord)")
+        sys.exit(
+            f"{'hold-out' if split == 'holdout' else split} refusé : {freeze} absent ou non versionné (geler d'abord)"
+        )
 
 
 def _load(split: str) -> list[dict]:
@@ -134,8 +139,10 @@ def main(argv: list[str] | None = None) -> None:
     ap = argparse.ArgumentParser()
     ap.add_argument("action", choices=["estimate", "submit", "collect", "replay"])
     ap.add_argument("--model", required=True, choices=MODELS)
-    ap.add_argument("--split", choices=["dev", "holdout"], default="dev")
+    ap.add_argument("--split", choices=["dev", "holdout", "v2-test", "v2-tuning"], default="dev")
     ap.add_argument("--effort", default=DEFAULT_EFFORT)
+    ap.add_argument("--max-tokens", type=int, default=DEFAULT_MAX_TOKENS)
+    ap.add_argument("--cap", type=float, help="plafond $ cumulé du registre (remplace 15 $)")
     ap.add_argument("--limit", type=int, help="premiers avis seulement (mise au point)")
     ap.add_argument("--name", required=True, help="préfixe des fichiers data/runs/<name>.*")
     ap.add_argument("--poll", type=float, default=30)
@@ -144,7 +151,7 @@ def main(argv: list[str] | None = None) -> None:
     records = _load(a.split)[: a.limit]
     base = Path("data/runs") / a.name
     meta_p, raw_p = base.with_suffix(".meta.json"), base.with_suffix(".jsonl")
-    ledger = CostLedger(LEDGER)
+    ledger = CostLedger(LEDGER, cap_usd=a.cap) if a.cap else CostLedger(LEDGER)
     if a.action == "replay":
         client, bid, meta = RecordedBatch(raw_p), "replay", json.loads(meta_p.read_text())
         rows = collect(client, bid, a.model, records, ledger, label=a.name, out_path=None,
@@ -152,14 +159,14 @@ def main(argv: list[str] | None = None) -> None:
     else:
         client = HttpClient()
         if a.action == "estimate":
-            e = estimate(client, a.model, records, effort=a.effort)
+            e = estimate(client, a.model, records, effort=a.effort, max_tokens=a.max_tokens)
             print(json.dumps(e.__dict__))
             return
         if a.action == "submit":
-            b = submit(client, a.model, records, ledger, effort=a.effort)
+            b = submit(client, a.model, records, ledger, effort=a.effort, max_tokens=a.max_tokens)
             meta_p.parent.mkdir(parents=True, exist_ok=True)
             meta_p.write_text(json.dumps({"batch_id": b["id"], "model": a.model, "split": a.split,
-                                          "effort": a.effort, "n": len(records),
+                                          "effort": a.effort, "max_tokens": a.max_tokens, "n": len(records),
                                           "created_at": b["created_at"]}, indent=1) + "\n")  # fmt: skip
             print(b["id"])
             return
