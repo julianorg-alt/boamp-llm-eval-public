@@ -72,8 +72,6 @@ def _criteria_sentence(crit: list[dict]) -> str:
     parts = []
     for c in crit:
         label = c.get("libelle") or CRITERION_LABELS.get(c.get("type") or "", "critère non précisé")
-        if c.get("type") in CRITERION_LABELS and c.get("libelle"):
-            label = f"{label} ({CRITERION_LABELS[c['type']]})"
         parts.append(
             f"{label}, pondéré à {fr_number(c['poids'])} %" if c.get("poids") is not None else label
         )

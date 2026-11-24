@@ -38,3 +38,11 @@ def test_mapa_text():
     assert "COMMUNE DE MIEUSSY" in t and "Site internet" in t
     assert "TESTNOM" not in t and "Xavier" not in t and "MAPA" not in t.replace("MAPA ", "")
     assert "Plâtrerie" in t and "40 %" in t
+
+
+def test_joue_criteria_have_no_type_suffix():
+    """v2 : le libellé du critère est rendu tel quel, sans le type entre parenthèses."""
+    t = render_text("JOUE", _joue(), Masker(["Jean Martin"]))
+    sentence = next(p for p in t.split("\n\n") if p.startswith("Les offres sont jugées"))
+    assert "(prix)" not in sentence and "(qualité)" not in sentence and "(coût)" not in sentence
+    assert "pondéré à 60 %" in sentence and "pondéré à 40 %" in sentence
