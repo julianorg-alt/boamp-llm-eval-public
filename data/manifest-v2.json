@@ -1,0 +1,98 @@
+{
+  "couverture_test": {
+    "FNS": {
+      "champs": {
+        "acheteur": 175,
+        "cpv": 163,
+        "criteres": 0,
+        "date_limite": 175,
+        "lieu": 175,
+        "lots": 84,
+        "montant_estime": 32,
+        "objet": 175,
+        "procedure": 175
+      },
+      "n": 175
+    },
+    "JOUE": {
+      "champs": {
+        "acheteur": 200,
+        "cpv": 200,
+        "criteres": 90,
+        "date_limite": 177,
+        "lieu": 182,
+        "lots": 99,
+        "montant_estime": 81,
+        "objet": 200,
+        "procedure": 200
+      },
+      "n": 200
+    },
+    "MAPA": {
+      "champs": {
+        "acheteur": 125,
+        "cpv": 0,
+        "criteres": 38,
+        "date_limite": 122,
+        "lieu": 103,
+        "lots": 36,
+        "montant_estime": 0,
+        "objet": 125,
+        "procedure": 125
+      },
+      "n": 125
+    }
+  },
+  "date_extraction": "2026-11-24",
+  "licence": {
+    "mention": "Source : BOAMP, DILA (Premier ministre), Licence Ouverte 2.0, données interrogées le 2026-11-18.",
+    "nom": "Licence Ouverte / Open Licence (Etalab, fr-lo)",
+    "source": "https://www.data.gouv.fr/datasets/boamp (métadonnée data.gouv.fr, id 559390f9c751df0139a453ba)",
+    "url": "https://www.etalab.gouv.fr/wp-content/uploads/2017/04/ETALAB-Licence-Ouverte-v2.0.pdf"
+  },
+  "n_criteres_test": 128,
+  "n_mise_au_point": 30,
+  "n_test": 500,
+  "par_famille_test": {
+    "FNS": 175,
+    "JOUE": 200,
+    "MAPA": 125
+  },
+  "par_strate_test": {
+    "Fournitures|avec_lots": 64,
+    "Fournitures|sans_lots": 89,
+    "Services|avec_lots": 78,
+    "Services|sans_lots": 114,
+    "Travaux|avec_lots": 77,
+    "Travaux|sans_lots": 78
+  },
+  "quotas_mise_au_point": {
+    "FNS": 10,
+    "JOUE": 12,
+    "MAPA": 8
+  },
+  "quotas_test": {
+    "FNS": 175,
+    "JOUE": 200,
+    "MAPA": 125
+  },
+  "requete": {
+    "fenetre_dates": [
+      "2026-11-16",
+      "2026-11-24"
+    ],
+    "taille_pool": {
+      "FNS": 756,
+      "JOUE": 734,
+      "MAPA": 148
+    },
+    "where": "nature_categorise='appeloffre/standard' AND etat='INITIAL' AND famille='<JOUE|FNS|MAPA>' AND dateparution entre 2026-11-16 et 2026-11-24"
+  },
+  "seed": 20261124,
+  "sha256": {
+    "v2-test": "2045034ab2a91d0a2b7e73c0e9fe0cb20b361be5d4d5e2a0d708b4dceb1919fc",
+    "v2-tuning": "2d8a3a785f2c99662fa41ebce28d9d02072109f0ff46c192098e1879fdd693f6"
+  },
+  "source": "https://boamp-datadila.opendatasoft.com/api/explore/v2.1/catalog/datasets/boamp/records",
+  "version": 2
+}

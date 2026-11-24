@@ -46,3 +46,8 @@ def test_joue_criteria_have_no_type_suffix():
     sentence = next(p for p in t.split("\n\n") if p.startswith("Les offres sont jugées"))
     assert "(prix)" not in sentence and "(qualité)" not in sentence and "(coût)" not in sentence
     assert "pondéré à 60 %" in sentence and "pondéré à 40 %" in sentence
+
+
+def test_mapa_sous_noeuds_en_chaine_ne_plantent_pas():
+    donnees = {"MAPA": {"organisme": "x", "initial": {"conditions": "texte", "caracteristiques": "t"}}}
+    assert isinstance(render_text("MAPA", donnees, Masker([])), str)

@@ -63,6 +63,11 @@ def fr_datetime(iso: str) -> str:
     return out
 
 
+def _d(x: Any) -> dict:
+    """Sous-nœud attendu en objet ; une chaîne ou une liste (formes rares) donne un objet vide."""
+    return x if isinstance(x, dict) else {}
+
+
 def _money(m: dict) -> str:
     unit = "euros" if m.get("devise") == "EUR" else (m.get("devise") or "")
     return f"{fr_number(m['valeur'])} {unit}".strip()
@@ -129,10 +134,10 @@ def _joue(donnees: dict, t: dict) -> list[str]:
 
 
 def _fns(donnees: dict, t: dict) -> list[str]:
-    root = donnees.get("FNSimple") or {}
-    ini = root.get("initial") or {}
-    nm = ini.get("natureMarche") or {}
-    org = root.get("organisme") or {}
+    root = _d(donnees.get("FNSimple"))
+    ini = _d(root.get("initial"))
+    nm = _d(ini.get("natureMarche"))
+    org = _d(root.get("organisme"))
     place = " ".join(p for p in [org.get("cp"), org.get("ville")] if p)
     out = [
         f"{t.get('acheteur', 'Un acheteur public')}{f' ({place})' if place else ''} publie un avis de marché : « {t.get('objet', '')} »."
@@ -144,7 +149,7 @@ def _fns(donnees: dict, t: dict) -> list[str]:
     out += _common(t)
     if t.get("lots"):
         out.append(_lots_paragraph(t["lots"]))
-    proc = ini.get("procedure") or {}
+    proc = _d(ini.get("procedure"))
     if _text(proc.get("criteresAttrib")):
         out.append("Attribution : " + _text(proc.get("criteresAttrib")))
     for key, lead in (
@@ -161,14 +166,14 @@ def _fns(donnees: dict, t: dict) -> list[str]:
 
 
 def _mapa(donnees: dict, t: dict) -> list[str]:
-    root = donnees.get("MAPA") or {}
-    ini = root.get("initial") or {}
-    org = root.get("organisme") or {}
+    root = _d(donnees.get("MAPA"))
+    ini = _d(root.get("initial"))
+    org = _d(root.get("organisme"))
     ville = _text(_get(org, "adr", "ville"))
     out = [
         f"{t.get('acheteur', 'Un acheteur public')}{f' ({ville})' if ville else ''} lance un marché à procédure adaptée : « {t.get('objet', '')} »."
     ]
-    car = ini.get("caracteristiques") or {}
+    car = _d(ini.get("caracteristiques"))
     for key in ("principales", "quantites"):
         if _text(car.get(key)):
             out.append(_text(car.get(key)))
@@ -178,7 +183,7 @@ def _mapa(donnees: dict, t: dict) -> list[str]:
     out += _common(t)
     if t.get("lots"):
         out.append(_lots_paragraph(t["lots"]))
-    cond = ini.get("conditions") or {}
+    cond = _d(ini.get("conditions"))
     if _text(cond.get("modFinancement")):
         out.append(_text(cond.get("modFinancement")))
     if _text(cond.get("formeJuridique")):
