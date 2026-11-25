@@ -54,3 +54,13 @@ Pire cas : identique à celui de E3 pour le même `max_tokens` et les mêmes ent
 
 Cumul (E2, E3, E4) : **1,4249 $ / 15 $** (463 entrées au registre).
 
+
+## v2 (2026-11-25, tarif lot, source : `data/costs-ledger.json`, étiquettes `v2-*`)
+| Lot | Avis | $ | $ par avis |
+|---|---|---|---|
+| mise au point Haiku 5.5 | 30 | 0,0037 | 0,00012 |
+| test Haiku 5.5 | 500 | 0,0616 | 0,00012 |
+| test Sonnet 5.5 | 500 | 1,0365 | 0,00207 |
+| test Opus 5.5 | 500 | 2,0832 | 0,00417 |
+
+Pire cas avant soumission : 73,67 $ (`max_tokens` 8192) ; garde au coût attendu, voir `docs/HANDOFF-v2.md`. Cumul du registre : 4,6099 $ / 15 $.

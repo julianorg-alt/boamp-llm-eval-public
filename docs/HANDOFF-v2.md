@@ -1,26 +1,23 @@
-# Passation v2 (2026-11-24)
+# Passation v2 (2026-11-25)
 
-## État
-- Branche `v2` (base : `main` du dépôt public). Fait : rendu corrigé (plus de suffixe de type sur les critères, test), `report.paired_diff_ci` (tests), échantillon v2 (500 avis de test publiés du 2026-11-16 au 2026-11-24, JOUE 200, FNS 175, MAPA 125, dont 128 avec critères notés ; 30 avis de mise au point, disjoints), lot de mise au point Haiku (30 avis : 0 inexploitable, 0 troncature, 0,0037 $), gel `docs/FREEZE-v2.md` (commit `c582c88dfdd620f51c65280e9b539ce4e9a1be03`), générateur `report_v2.py` testé hors réseau.
-- **Aucun appel n'a été fait sur les 500 avis.** Arrêt à l'étape 5 : l'estimation dépasse 8 $.
+## État : terminé, branche `v2` poussée (pas de PR, pas de fusion : décision de Julian)
+- Gel : `docs/FREEZE-v2.md`, commit `c582c88dfdd620f51c65280e9b539ce4e9a1be03`, posé avant tout appel sur le jeu de test. Rapport : `reports/results-v2.md` (généré par `python -m boamp_eval.report_v2`).
+- Trois lots (Message Batches, un passage chacun, 500 avis, 0 erreur de lot, 0 troncature, 0 réponse inexploitable). Coût : 3,1813 $ pour les trois lots (Haiku 0,0616 ; Sonnet 1,0365 ; Opus 2,0832), 3,185 $ avec le lot de mise au point ; registre 4,6099 $ cumulés sur 15 $, v2 sous le plafond de 8 $.
 
-## Estimation (au pire cas, tarif lot, `max_tokens` 8192, 500 avis, 2 187 675 tokens d'entrée)
-| Modèle | Pire cas $ |
-|---|---|
-| Haiku 5.5 | 5,67 (majoré : tarif « prompt > 100 000 tokens » appliqué à la somme) |
-| Sonnet 5.5 | 22,67 |
-| Opus 5.5 | 45,34 |
-| Total | 73,67 |
+## Chiffres clés (`hard_global`, 500 avis)
+| Différence | Écart [IC 98,33 %] | Verdict |
+|---|---|---|
+| Opus - Haiku | +0,014 [+0,003 ; +0,025] | établi |
+| Opus - Sonnet | +0,010 [-0,000 ; +0,022] | non établi |
+| Sonnet - Haiku | +0,004 [-0,007 ; +0,014] | non établi |
 
-Le pire cas suppose 8 192 tokens de sortie pour chaque avis. Mesuré en v1 (80 avis dev, `max_tokens` 4096) : 0,00014 $ (Haiku), 0,00254 $ (Sonnet), 0,00507 $ (Opus) par avis, soit environ 0,07 + 1,27 + 2,54 = 3,9 $ pour 500 avis (extrapolation, non vérifiée sur ce jeu). Registre actuel : 1,4286 $ ; plafond du registre à passer à 9,42 $ (`--cap 9.42`) pour tenir les 8 $ de la v2.
+Scores : Haiku 0,939, Sonnet 0,943, Opus 0,953. Le champ `criteres` (128 avis) reste le plus bas (0,72 à 0,78) : analyse secondaire, rien d'établi seul.
 
-## Question ouverte
-La règle « estimation > 8 $ : stop » s'applique à la lettre. Options :
-1. **Lancer avec un garde au réel (recommandé)** : garde de budget par avis impossible en lot, mais la dépense attendue est d'environ 4 $ ; le plafond de 8 $ ne peut être dépassé que si les sorties explosent (peu probable à l'effort `low`). Seule voie qui tient le protocole gelé. À lancer : `submit` puis `collect` pour les trois modèles avec `--split v2-test --max-tokens 8192 --cap 9.42`.
-2. Lancer d'abord Haiku et Sonnet (≈ 1,3 $), puis Opus seulement si le coût mesuré le permet : même protocole, trois lots soumis en deux temps (aucun effet sur les résultats).
-3. Réduire `max_tokens` à 4096 : divise le pire cas par deux (≈ 36 $), reste au-dessus de 8 $, et change le protocole gelé (à refaire avant tout appel).
+## Écarts au plan, à connaître
+- Garde de budget : le garde au pire cas (73,67 $) interdisait tout lancement sous 8 $. Sur QCM de Julian (25/11), `submit --guard expected` compare un coût attendu (1,5 x le plus fort coût par avis mesuré en v1) au plafond 9,42 $. Les prompt, schéma et métriques gelés n'ont pas changé ; le coût réel (3,18 $) est resté sous 8 $.
+- Les trois `collect` ont tourné en parallèle : une course sur `data/costs-ledger.json` a fait échouer la fin du `collect` Opus (réponses brutes déjà écrites). Les coûts Opus ont été enregistrés ensuite depuis ces réponses brutes, sans nouvel appel au modèle ; la méta Opus a été complétée par un `GET` du lot. Les 500 entrées Opus sont au registre, une fois.
+- `report_v2.py` n'a pas été modifié depuis le gel.
+- La borne basse de Opus - Sonnet s'affiche « -0,000 » : elle est légèrement négative, donc l'IC contient 0.
 
 ## Limites
-Rendu texte reconstruit (circularité), une seule période, un passage par modèle, analyses par champ et par famille secondaires.
-
-QUESTION : l'estimation au pire cas de 73,67 $ dépasse 8 $ alors que le coût attendu est d'environ 4 $ ; lancer les trois lots (option 1, recommandée), Haiku et Sonnet d'abord (option 2) ou réduire `max_tokens` (option 3) ?
+Rendu texte reconstruit (circularité), une seule période (16 au 24/11/2026), un passage par modèle à l'effort `low`, analyses par champ et par famille secondaires, écart établi valable pour ce jeu et cette métrique seulement.
