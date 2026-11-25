@@ -33,6 +33,16 @@ FREEZE_FOR = {"holdout": FREEZE, "v2-test": FREEZE_V2}  # jeux lus seulement apr
 MODELS = ("claude-haiku-5-5", "claude-sonnet-5-5", "claude-opus-5-5")
 
 
+# Coût attendu par avis, tarif lot : 1,5 x le plus fort coût réel par avis mesuré en v1
+# (docs/COSTS.md : 0,00014 / 0,00254 / 0,00507 $ en dev ; 0,00011 / 0,00193 / 0,00383 $ en hold-out).
+EXPECTED_PER_AVIS_USD = {"claude-haiku-5-5": 0.00021, "claude-sonnet-5-5": 0.0038,
+                         "claude-opus-5-5": 0.0076}  # fmt: skip
+
+
+def expected_usd(model: str, n: int) -> float:
+    return EXPECTED_PER_AVIS_USD[model] * n
+
+
 @dataclass(frozen=True)
 class Estimate:
     n: int
@@ -55,9 +65,13 @@ def estimate(client, model: str, records: list[dict], *, max_tokens: int = DEFAU
 
 
 def submit(client, model: str, records: list[dict], ledger: CostLedger, *,
-           max_tokens: int = DEFAULT_MAX_TOKENS, effort: str = DEFAULT_EFFORT) -> dict:  # fmt: skip
-    est = estimate(client, model, records, max_tokens=max_tokens, effort=effort)
-    ledger.guard(est.usd)
+           max_tokens: int = DEFAULT_MAX_TOKENS, effort: str = DEFAULT_EFFORT,
+           guard: str = "worst") -> dict:  # fmt: skip
+    """Garde « worst » (défaut) : pire cas ; « expected » : coût attendu mesuré en v1 (tracé au gel)."""
+    if guard == "expected":
+        ledger.guard(expected_usd(model, len(records)))
+    else:
+        ledger.guard(estimate(client, model, records, max_tokens=max_tokens, effort=effort).usd)
     return client.create_batch(batch_requests(model, records, effort=effort, max_tokens=max_tokens))
 
 
@@ -143,6 +157,7 @@ def main(argv: list[str] | None = None) -> None:
     ap.add_argument("--effort", default=DEFAULT_EFFORT)
     ap.add_argument("--max-tokens", type=int, default=DEFAULT_MAX_TOKENS)
     ap.add_argument("--cap", type=float, help="plafond $ cumulé du registre (remplace 15 $)")
+    ap.add_argument("--guard", choices=["worst", "expected"], default="worst")
     ap.add_argument("--limit", type=int, help="premiers avis seulement (mise au point)")
     ap.add_argument("--name", required=True, help="préfixe des fichiers data/runs/<name>.*")
     ap.add_argument("--poll", type=float, default=30)
@@ -163,7 +178,15 @@ def main(argv: list[str] | None = None) -> None:
             print(json.dumps(e.__dict__))
             return
         if a.action == "submit":
-            b = submit(client, a.model, records, ledger, effort=a.effort, max_tokens=a.max_tokens)
+            b = submit(
+                client,
+                a.model,
+                records,
+                ledger,
+                effort=a.effort,
+                max_tokens=a.max_tokens,
+                guard=a.guard,
+            )
             meta_p.parent.mkdir(parents=True, exist_ok=True)
             meta_p.write_text(json.dumps({"batch_id": b["id"], "model": a.model, "split": a.split,
                                           "effort": a.effort, "max_tokens": a.max_tokens, "n": len(records),

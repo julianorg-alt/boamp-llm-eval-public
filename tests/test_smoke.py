@@ -145,5 +145,6 @@ def test_submit_refuses_a_batch_that_would_break_the_budget(tmp_path):
 
 def test_ledger_total_matches_the_published_spend():
     ledger = costs.CostLedger(ROOT / "data/costs-ledger.json")
-    assert round(ledger.total_usd, 2) == 1.42
+    v1 = sum(e["cost_usd"] for e in ledger.entries if not e["label"].startswith("v2-"))
+    assert round(v1, 2) == 1.42  # dépense v1 ; les passages v2 sont comptés à part
     assert ledger.total_usd < ledger.cap_usd

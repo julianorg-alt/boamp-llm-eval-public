@@ -172,3 +172,20 @@ def test_require_freeze_v2_test_refuse_sans_gel(tmp_path, monkeypatch):
         batch.require_freeze("v2-test")
     batch.require_freeze("v2-tuning")  # la mise au point reste ouverte
     batch.require_freeze("dev")
+
+
+def test_garde_attendu_refuse_si_depasse_et_passe_sinon(tmp_path):
+    c = FakeBatchClient([], [])
+    petit = CostLedger(tmp_path / "l.json", cap_usd=0.001)
+    with pytest.raises(BudgetExceededError):
+        batch.submit(c, M, RECS, petit, max_tokens=8192, guard="expected")
+    assert c.created == []
+    large = CostLedger(tmp_path / "l2.json", cap_usd=9.42)
+    with pytest.raises(BudgetExceededError):  # le garde pire cas refuse le même lot
+        batch.submit(c, M, RECS * 400, large, max_tokens=8192)
+    batch.submit(c, M, RECS * 200, large, max_tokens=8192, guard="expected")
+    assert len(c.created) == 1
+
+
+def test_cout_attendu_par_avis_v1():
+    assert batch.expected_usd("claude-opus-5-5", 500) == pytest.approx(3.8)
