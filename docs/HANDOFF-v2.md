@@ -21,3 +21,6 @@ Scores : Haiku 0,939, Sonnet 0,943, Opus 0,953. Le champ `criteres` (128 avis) r
 
 ## Limites
 Rendu texte reconstruit (circularité), une seule période (16 au 24/11/2026), un passage par modèle à l'effort `low`, analyses par champ et par famille secondaires, écart établi valable pour ce jeu et cette métrique seulement.
+
+## Note sur l'historique (2026-11-28)
+L'historique du dépôt a été réécrit (auteur anonyme, messages sans trailer) ; les arbres de fichiers sont identiques. Le commit de gel `c582c88dfdd620f51c65280e9b539ce4e9a1be03` cité plus haut et dans `reports/results-v2.md` est devenu `30818623188ff9ed35d6826d01c9fd6e2fbee22e`.
